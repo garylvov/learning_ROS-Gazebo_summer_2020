@@ -1,0 +1,130 @@
+<?xml version="1.0"?>
+<robot name="kinectBot">
+
+  <!--          -->
+  <!--geometries-->
+  <!--          -->
+
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <box size="1.5 .5 .25"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 .25"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="1.5 .5 .25"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="1.875"/>
+      <inertia ixx="3.613" ixy="0" ixz="0" iyy="3.906" iyz="0" izz="0.488"/>
+    </inertial>
+  </link>
+
+  <link name="rightFrontWheel">
+    <visual>
+      <geometry>
+      	<cylinder length=".15" radius=".25"/>
+      </geometry>
+      <origin rpy="1.5707 0 0" xyz="0 0 0"/>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length=".15" radius=".25"/>
+      </geometry>
+    </collision>
+ <inertial>
+      <mass value="10"/>
+      <inertia ixx="0.175" ixy="0" ixz="0" iyy="0.175" iyz="0" izz="0.313"/>
+    </inertial>
+  </link>
+
+  <link name="leftFrontWheel">
+    <visual>
+      <geometry>
+      	<cylinder length=".15" radius=".25"/>
+      </geometry>
+      <origin rpy="1.5707 0 0" xyz="0 0 0"/>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length=".15" radius=".25"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="10"/>
+      <inertia ixx="0.175" ixy="0" ixz="0" iyy="0.175" iyz="0" izz="0.313"/>
+    </inertial>
+  </link>
+
+  <link name="rightRearWheel">
+    <visual>
+      <geometry>
+      	<cylinder length=".15" radius=".25"/>
+      </geometry>
+      <origin rpy="1.5707 0 0" xyz="0 0 0"/>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length=".15" radius=".25"/>
+      </geometry>
+    </collision>
+     <inertial>
+      <mass value="10"/>
+        <inertia ixx="0.175" ixy="0" ixz="0" iyy="0.175" iyz="0" izz="0.313"/>
+    </inertial>
+  </link>
+
+  <link name="leftRearWheel">
+    <visual>
+      <geometry>
+      	<cylinder length=".15" radius=".25"/>
+      </geometry>
+      <origin rpy="1.5707 0 0" xyz="0 0 0"/>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length=".15" radius=".25"/>
+      </geometry>
+    </collision>
+     <inertial>
+      <mass value="10"/>
+        <inertia ixx="0.175" ixy="0" ixz="0" iyy="0.175" iyz="0" izz="0.313"/>
+    </inertial>
+  </link>
+
+  <!--      -->
+  <!--joints-->
+  <!--      -->
+
+  <joint name="rightFrontWheelToBase" type="continuous">
+    <parent link="base_link"/>
+    <child link="rightFrontWheel"/>
+    <axis xyz="0 .325 0"/>
+    <origin xyz=".5 .325 .25"/>
+  </joint>
+
+  <joint name="leftFrontWheelToBase" type="continuous">
+    <parent link="base_link"/>
+    <child link="leftFrontWheel"/>
+    <axis xyz="0 -.325 0"/>
+    <origin xyz=".5 -.325 .25"/>
+  </joint>
+
+  <joint name="rightRearWheelToBase" type="continuous">
+    <parent link="base_link"/>
+    <child link="rightRearWheel"/>
+    <axis xyz="0 .325 0"/>
+    <origin xyz="-.5 .325 .25"/>
+  </joint>
+
+  <joint name="leftRearWheelToBase" type="continuous">
+    <parent link="base_link"/>
+    <child link="leftRearWheel"/>
+    <axis xyz="0 -.325 0"/>
+    <origin xyz="-.5 -.325 .25"/>
+  </joint>
+
+</robot>

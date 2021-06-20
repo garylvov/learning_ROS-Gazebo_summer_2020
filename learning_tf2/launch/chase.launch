@@ -1,0 +1,16 @@
+<launch>
+
+  <!--initiates turtlesim and allows keyboard to publish to velocity-->
+    <node pkg="turtlesim" type="turtlesim_node" name="sim"/>
+    <node pkg="turtlesim" type="turtle_teleop_key" name="teleop" output="screen"/>
+
+    <!--creates "missiles"-->
+    <node pkg="learning_tf2" type="creator.py"
+          name="createField" output="screen"/>
+    <!--publishes coords to tf for all turtles-->
+    <node pkg="learning_tf2" type="optimizedBroadcaster.py"
+          name="bcOptimized" output="screen"/>
+    <!-- interperts publishes tf coords to create interactions in chase game-->
+    <node pkg="learning_tf2" type="handler.py"
+          name="turtleHandler" output="screen"/>
+</launch>

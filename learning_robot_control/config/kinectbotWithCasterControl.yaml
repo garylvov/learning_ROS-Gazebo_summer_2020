@@ -1,0 +1,15 @@
+kinectbotWithCaster:
+  # Publish all joint states
+  joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 50
+
+  # Velocity Controllers
+  rightFrontWheel_velocity_controller:
+    type: velocity_controllers/JointVelocityController
+    joint: rightFrontWheelJoint
+    pid: {p: 100.0, i: 0.01, d: 10.0}
+  leftFrontWheel_velocity_controller:
+    type: velocity_controllers/JointVelocityController
+    joint: leftFrontWheelJoint
+    pid: {p: 100.0, i: 0.01, d: 10.0}

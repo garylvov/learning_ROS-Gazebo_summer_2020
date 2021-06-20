@@ -1,0 +1,288 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="armV1">
+
+    <!--Xacro macro types for easily creating models of cylinders and rectangular prisms-->
+    <xacro:macro name="cylinder" params="name orientation radius depth density">
+      <link name="${name}">
+        <visual>
+          <geometry>
+            <cylinder length="${depth}" radius="${radius}"/>
+          </geometry>
+          <origin rpy="${orientation} 0 0" xyz="0 0 0"/>
+        </visual>
+
+        <collision>
+          <geometry>
+            <cylinder length="${depth}" radius="${radius}"/>
+          </geometry>
+          <origin rpy="${orientation} 0 0" xyz="0 0 0"/>
+        </collision>
+
+        <inertial>
+          <mass value="${(radius*radius*density)*3.1415}"/>
+          <inertia
+            ixx="${(((radius*radius*density)*3.1415)/12)*(3*(radius*radius)+(depth*depth))}"
+            ixy="0"
+            ixz="0"
+            iyy="${(((radius*radius*density)*3.1415)/12)*(3*(radius*radius)+(depth*depth))}"
+            iyz="0"
+            izz="${(((radius*radius*density)*3.1415)/2)*(radius*radius)}"/>
+        </inertial>
+      </link>
+    </xacro:macro>
+
+    <xacro:macro name="box" params="name depth width height density">
+      <link name="${name}">
+        <visual>
+          <geometry>
+            <box size="${depth} ${width} ${height}"/>
+          </geometry>
+          <origin rpy="0 0 0" xyz="0 0 0"/>
+        </visual>
+
+        <collision>
+          <geometry>
+            <box size="${depth} ${width} ${height}"/>
+          </geometry>
+          <origin rpy="0 0 0" xyz="0 0 0"/>
+        </collision>
+
+        <inertial>
+          <mass value="${depth*width*height*density}"/>
+          <inertia
+            ixx="${(depth*width*height*density)/12*((height*height)+(depth*depth))}"
+            ixy="0"
+            ixz="0"
+            iyy="${(depth*width*height*density)/12*((width*width)+(depth*depth))}"
+            iyz="0"
+            izz="${(depth*width*height*density)/12*((width*width)+(height*height))}"/>
+        </inertial>
+      </link>
+    </xacro:macro>
+
+    <!--control plugin for joints-->
+    <gazebo>
+      <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+        <robotNamespace>/armV1</robotNamespace>
+      </plugin>
+    </gazebo>
+
+      <!--links-->
+      <xacro:property name="c11Depth" value=".15" />
+      <xacro:property name="c11Width" value=".075" />
+      <xacro:property name="c11Height" value=".15" />
+      <xacro:box name="c11" depth="${c11Depth}" width="${c11Width}" height="${c11Height}" density="10"/>
+
+      <xacro:property name="c12Radius" value=".05" />
+      <xacro:property name="c12Depth" value=".025" />
+      <xacro:cylinder name="c12" orientation="1.5707" radius="${c12Radius}" depth="${c12Depth}" density="10"/>
+
+      <xacro:property name="c13Radius" value=".05" />
+      <xacro:property name="c13Depth" value=".025" />
+      <xacro:cylinder name="c13" orientation="1.5707" radius="${c13Radius}" depth="${c13Depth}" density="10"/>
+
+      <xacro:property name="a1Depth" value=".05" />
+      <xacro:property name="a1Width" value=".05" />
+      <xacro:property name="a1Height" value=".5" />
+      <xacro:box name="a1" depth="${a1Depth}" width="${a1Width}" height="${a1Height}" density="10"/>
+
+      <xacro:property name="c21Radius" value=".025" />
+      <xacro:property name="c21Depth" value=".025" />
+      <xacro:cylinder name="c21" orientation="0" radius="${c21Radius}" depth="${c21Depth}" density="10"/>
+
+      <xacro:property name="c22Radius" value=".025" />
+      <xacro:property name="c22Depth" value=".025" />
+      <xacro:cylinder name="c22" orientation="0" radius="${c22Radius}" depth="${c22Depth}" density="10"/>
+
+      <xacro:property name="a2Depth" value=".35" />
+      <xacro:property name="a2Width" value=".025" />
+      <xacro:property name="a2Height" value=".05" />
+      <xacro:box name="a2" depth="${a2Depth}" width="${a2Width}" height="${a2Height}" density="10"/>
+
+      <xacro:property name="c31Depth" value=".1" />
+      <xacro:property name="c31Width" value=".1" />
+      <xacro:property name="c31Height" value=".005" />
+      <xacro:box name="c31" depth="${c31Depth}" width="${c31Width}" height="${c31Height}" density="10"/>
+
+      <xacro:property name="c32Depth" value=".1" />
+      <xacro:property name="c32Width" value=".1" />
+      <xacro:property name="c32Height" value=".005" />
+      <xacro:box name="c32" depth="${c32Depth}" width="${c32Width}" height="${c32Height}" density="10"/>
+
+      <xacro:property name="c33Radius" value=".009" />
+      <xacro:property name="c33Depth" value=".05" />
+      <xacro:cylinder name="c33" orientation="0" radius="${c33Radius}" depth="${c33Depth}" density="10"/>
+
+      <xacro:property name="c34Radius" value=".009" />
+      <xacro:property name="c34Depth" value=".05" />
+      <xacro:cylinder name="c34" orientation="0" radius="${c34Radius}" depth="${c34Depth}" density="10"/>
+
+      <link name="claw1">
+        <visual>
+          <geometry>
+            <mesh filename="package://learning_robot_control/meshes/gripperV2.dae" scale="0.0075 0.0075 0.0075"/>
+          </geometry>
+          <origin rpy="1.5707 0 0" xyz="0 0 0"/>
+        </visual>
+
+        <collision>
+          <geometry>
+            <mesh filename="package://learning_robot_control/meshes/gripperV2.dae" scale="0.0075 0.0075 0.0075"/>
+          </geometry>
+          <origin rpy="1.5707 0 0" xyz="0 0 0"/>
+        </collision>
+
+        <inertial>
+          <mass value="1"/>
+          <inertia
+            ixx=".01"
+            ixy="0"
+            ixz="0"
+            iyy=".01"
+            iyz="0"
+            izz=".01"/>
+        </inertial>
+      </link>
+
+      <link name="claw2">
+        <visual>
+          <geometry>
+            <mesh filename="package://learning_robot_control/meshes/gripperV2.dae" scale="0.0075 0.0075 0.0075"/>
+          </geometry>
+          <origin rpy="1.5707 3.1415 3.1415" xyz="0 0 0"/>
+        </visual>
+
+        <collision>
+          <geometry>
+            <mesh filename="package://learning_robot_control/meshes/gripperV2.dae" scale="0.0075 0.0075 0.0075"/>
+          </geometry>
+          <origin rpy="1.5707 3.1415 3.1415" xyz="0 0 0"/>
+        </collision>
+
+        <inertial>
+          <mass value="1"/>
+          <inertia
+            ixx=".01"
+            ixy="0"
+            ixz="0"
+            iyy=".01"
+            iyz="0"
+            izz=".01"/>
+        </inertial>
+      </link>
+
+      <!--
+      <xacro:property name="c34Radius" value=".00925" />
+      <xacro:property name="c34Depth" value=".025" />
+      <xacro:cylinder name="c34" orientation="0" radius="${c34Radius}" depth="${c34Depth}" density="10"/>
+    -->
+     <link name="world"/>
+
+      <!--Joints-->
+      <joint name="c11ToWorldJoint" type="fixed">
+        <parent link="world"/>
+        <child link="c11"/>
+        <origin xyz="0 0 ${c11Height/2}"/>
+      </joint>
+
+      <joint name="c12Toc11Joint" type="fixed">
+        <parent link="c11"/>
+        <child link="c12"/>
+        <origin xyz="0 ${c12Depth/2+c11Width/2} 0"/>
+      </joint>
+
+      <joint name="c13Toc12Joint" type="continuous">
+        <parent link="c12"/>
+        <child link="c13"/>
+        <axis xyz="0 ${c13Depth} 0"/>
+        <origin xyz="0 ${c13Depth} 0"/>
+      </joint>
+
+      <joint name="a1Toc13Joint" type="fixed">
+        <parent link="c13"/>
+        <child link="a1"/>
+        <origin xyz="0 ${c13Depth/2+a1Width/2} ${(a1Height/2)-c13Radius}"/>
+      </joint>
+
+      <joint name="c21toa1Joint" type="fixed">
+        <parent link="a1"/>
+        <child link="c21"/>
+        <origin xyz="0 0 ${c21Depth/2+a1Height/2}"/>
+      </joint>
+
+      <joint name="c22Toc21Joint" type="continuous">
+        <parent link="c21"/>
+        <child link="c22"/>
+        <axis xyz="0 0 ${c22Depth}"/>
+        <origin xyz="0 0 ${c22Depth}"/>
+      </joint>
+
+      <joint name="a2Toc22Joint" type="fixed">
+        <parent link="c22"/>
+        <child link="a2"/>
+        <origin xyz="${(a2Depth/2)-(c22Radius)} 0 ${(a2Height/2)+(c22Depth/2)}"/>
+      </joint>
+
+      <joint name="c31Toa2Joint" type="fixed">
+        <parent link="a2"/>
+        <child link="c31"/>
+        <origin xyz="${a2Depth/2} 0 ${a2Height/2 + c31Height/2}"/>
+      </joint>
+
+      <joint name="c32Toa2Joint" type="fixed">
+        <parent link="a2"/>
+        <child link="c32"/>
+        <origin xyz="${a2Depth/2} 0 ${(a2Height/2 + c32Height/2)*-1}"/>
+      </joint>
+
+      <joint name="c33Toc32Joint" type="fixed">
+        <parent link="c32"/>
+        <child link="c33"/>
+        <origin xyz="${c32Width/3} ${c32Depth/3} ${c32Height/2 + c33Depth/2}"/>
+      </joint>
+
+      <joint name="c34Toc32Joint" type="fixed">
+        <parent link="c32"/>
+        <child link="c34"/>
+        <origin xyz="${c32Width/3} ${c32Depth/-3} ${c32Height/2 + c34Depth/2}"/>
+      </joint>
+
+      <joint name="claw1Toc33Joint" type="continuous">
+        <parent link="c33"/>
+        <child link="claw1"/>
+        <axis xyz="0 0 ${(c33Depth/-2) + .0075}"/>
+        <origin xyz="0 0 ${(c33Depth/-2) + .0075}"/>
+      </joint>
+
+      <joint name="claw2Toc34Joint" type="continuous">
+        <parent link="c34"/>
+        <child link="claw2"/>
+        <axis xyz="0 0 ${(c34Depth/2) - .0075}"/>
+        <origin xyz="0 0 ${(c34Depth/2) - .0075}"/>
+      </joint>
+
+      <!--Actuators/transmissions for moving joints-->
+      <transmission name="c13transmission">
+        <type>transmission_interface/SimpleTransmission</type>
+          <joint name="c13Toc12Joint">
+          <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+          </joint>
+      <actuator name="c13Motor">
+        <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+
+    <transmission name="c22transmission">
+      <type>transmission_interface/SimpleTransmission</type>
+        <joint name="c22Toc21Joint">
+        <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+        </joint>
+    <actuator name="c22Motor">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+
+</robot>

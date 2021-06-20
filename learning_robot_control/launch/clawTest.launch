@@ -1,0 +1,15 @@
+<launch>
+  <param name="robot_description" command="xacro --inorder '$(find learning_robot_control)/urdf/clawV2.urdf.xacro'" />
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+  </include>
+  <node name="spawn_urdf" pkg="gazebo_ros"
+                          type="spawn_model"
+                          respawn="false"
+                          args="-param robot_description -urdf -model clawV2" />
+
+ <!-- convert joint states to TF transforms for rviz, etc -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"
+   respawn="false" output="screen">
+   <remap from="/joint_states" to="/hokuyobot/joint_states" />
+  </node>
+</launch>

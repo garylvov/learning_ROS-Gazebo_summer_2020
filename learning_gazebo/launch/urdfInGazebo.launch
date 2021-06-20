@@ -1,0 +1,8 @@
+<launch>
+  <!--if not xacro delete xacro inorder from command-->
+  <!--replace file path with desired urdf file name-->
+  <param name="robot_description" command="xacro --inorder '$(find learning_gazebo)/urdf/botWithKinect.urdf.xacro'" />
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+  </include>
+  <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" respawn="false" args="-param robot_description -urdf -model botV1" />
+</launch>

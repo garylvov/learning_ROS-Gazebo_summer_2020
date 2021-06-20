@@ -1,0 +1,234 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="kinectbot">
+
+  <!--central box properties-->
+  <xacro:property name="depthBox" value=".5" />
+  <xacro:property name="widthBox" value=".3" />
+  <xacro:property name="heightBox" value=".1" />
+  <xacro:property name="densityBox" value="100" />
+
+  <!--wheel properties-->
+  <xacro:property name="radiusCylinder" value=".1" />
+  <xacro:property name="lengthCylinder" value=".05" />
+  <xacro:property name="densityCylinder" value="100" />
+
+  <!--kinect properties-->
+  <xacro:property name="depthKinect" value="0.073000"/>
+  <xacro:property name="widthKinect" value="0.276000"/>
+  <xacro:property name="heightKinect" value="0.072000"/>
+  <xacro:property name="densityKinect" value="100"/>
+
+  <!--kinect-->
+    <link name="kinect">
+      <visual>
+        <geometry>
+          <mesh filename="package://learning_robot_control/meshes/kinect.dae"/>
+        </geometry>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+      </visual>
+
+      <collision>
+        <geometry>
+          <box size="${depthKinect} ${widthKinect} ${heightKinect}"/>
+        </geometry>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+      </collision>
+
+      <inertial>
+        <mass value="${depthKinect*widthKinect*heightKinect*densityKinect}"/>
+        <inertia
+          ixx="${(depthKinect*widthKinect*heightKinect*densityKinect)/12*((heightKinect*heightKinect)+(depthKinect*depthKinect))}"
+          ixy="0"
+          ixz="0"
+          iyy="${(depthKinect*widthKinect*heightKinect*densityKinect)/12*((widthKinect*widthKinect)+(depthKinect*depthKinect))}"
+          iyz="0"
+          izz="${(depthKinect*widthKinect*heightKinect*densityKinect)/12*((widthKinect*widthKinect)+(heightKinect*heightKinect))}"/>
+      </inertial>
+      <gazebo reference="kinect">
+        <sensor name="kinect_camera" type="depth">
+          <update_rate>20</update_rate>
+
+          <camera>
+            <horizontal_fov>1.047198</horizontal_fov>
+            <image>
+              <width>640</width>
+              <height>480</height>
+              <format>R8G8B8</format>
+            </image>
+            <clip>
+              <near>0.05</near>
+              <far>3</far>
+            </clip>
+          </camera>
+
+          <plugin name="kinect_controller" filename="libgazebo_ros_openni_kinect.so">
+            <baseline>0.2</baseline>
+            <alwaysOn>true</alwaysOn>
+            <updateRate>20.0</updateRate>
+            <cameraName>kinect_camera_ir</cameraName>
+            <imageTopicName>/kinect_camera/color/image_raw</imageTopicName>
+            <cameraInfoTopicName>/kinect_camera/color/camera_info</cameraInfoTopicName>
+            <depthImageTopicName>/kinect_camera/depth/image_raw</depthImageTopicName>
+            <depthImageCameraInfoTopicName>/kinect_camera/depth/camera_info</depthImageCameraInfoTopicName>
+            <pointCloudTopicName>/kinect_camera/depth/points</pointCloudTopicName>
+            <frameName>kinect</frameName>
+            <pointCloudCutoff>0.5</pointCloudCutoff>
+            <pointCloudCutoffMax>3.0</pointCloudCutoffMax>
+            <distortionK1>0</distortionK1>
+            <distortionK2>0</distortionK2>
+            <distortionK3>0</distortionK3>
+            <distortionT1>0</distortionT1>
+            <distortionT2>0</distortionT2>
+            <CxPrime>0</CxPrime>
+            <Cx>0</Cx>
+            <Cy>0</Cy>
+            <focalLength>0</focalLength>
+            <hackBaseline>0</hackBaseline>
+          </plugin>
+        </sensor>
+    </gazebo>
+    </link>
+
+  <!--box bdy-->
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <box size="${depthBox} ${widthBox} ${heightBox}"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 ${heightBox}"/>
+    </visual>
+
+    <collision>
+      <geometry>
+        <box size="${depthBox} ${widthBox} ${heightBox}"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 ${heightBox}"/>
+    </collision>
+
+    <inertial>
+      <mass value="${depthBox*widthBox*heightBox*densityBox}"/>
+      <inertia
+        ixx="${(depthBox*widthBox*heightBox*densityBox)/12*((heightBox*heightBox)+(depthBox*depthBox))}"
+        ixy="0"
+        ixz="0"
+        iyy="${(depthBox*widthBox*heightBox*densityBox)/12*((widthBox*widthBox)+(depthBox*depthBox))}"
+        iyz="0"
+        izz="${(depthBox*widthBox*heightBox*densityBox)/12*((widthBox*widthBox)+(heightBox*heightBox))}"/>
+    </inertial>
+  </link>
+
+  <!--gazebo plugin for kinect-->
+  <gazebo reference="kinect">
+    <sensor name="kinect_camera" type="depth">
+      <update_rate>20</update_rate>
+
+      <camera>
+        <horizontal_fov>1.047198</horizontal_fov>
+        <image>
+          <width>640</width>
+          <height>480</height>
+          <format>R8G8B8</format>
+        </image>
+        <clip>
+          <near>0.05</near>
+          <far>3</far>
+        </clip>
+      </camera>
+
+      <plugin name="kinect_controller" filename="libgazebo_ros_openni_kinect.so">
+        <baseline>0.2</baseline>
+        <alwaysOn>true</alwaysOn>
+        <updateRate>20.0</updateRate>
+        <cameraName>kinect_camera_ir</cameraName>
+        <imageTopicName>/kinect_camera/color/image_raw</imageTopicName>
+        <cameraInfoTopicName>/kinect_camera/color/camera_info</cameraInfoTopicName>
+        <depthImageTopicName>/kinect_camera/depth/image_raw</depthImageTopicName>
+        <depthImageCameraInfoTopicName>/kinect_camera/depth/camera_info</depthImageCameraInfoTopicName>
+        <pointCloudTopicName>/kinect_camera/depth/points</pointCloudTopicName>
+        <frameName>kinect</frameName>
+        <pointCloudCutoff>0.5</pointCloudCutoff>
+        <pointCloudCutoffMax>3.0</pointCloudCutoffMax>
+        <distortionK1>0</distortionK1>
+        <distortionK2>0</distortionK2>
+        <distortionK3>0</distortionK3>
+        <distortionT1>0</distortionT1>
+        <distortionT2>0</distortionT2>
+        <CxPrime>0</CxPrime>
+        <Cx>0</Cx>
+        <Cy>0</Cy>
+        <focalLength>0</focalLength>
+        <hackBaseline>0</hackBaseline>
+      </plugin>
+    </sensor>
+</gazebo>
+<!--gazebo plugin for controlling robot-->
+
+<gazebo>
+  <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+    <robotNamespace>/kinectbot</robotNamespace>
+  </plugin>
+</gazebo>
+
+  <!--algorithm for creating wheels and joints-->
+  <xacro:macro name="wheel" params="prefix x y">
+      <link name="${prefix}Wheel">
+        <visual>
+          <geometry>
+          	<cylinder length="${lengthCylinder}" radius="${radiusCylinder}"/>
+          </geometry>
+          <origin rpy="1.5707 0 0" xyz="0 0 0"/>
+        </visual>
+
+        <collision>
+          <geometry>
+            <cylinder length="${lengthCylinder}" radius="${radiusCylinder}"/>
+          </geometry>
+          <origin rpy="1.5707 0 0" xyz="0 0 0"/>
+        </collision>
+
+     <inertial>
+          <mass value="${(radiusCylinder*radiusCylinder)*3.1415}"/>
+          <inertia
+            ixx="${(((radiusCylinder*radiusCylinder)*3.1415)/12)*(3*(radiusCylinder*radiusCylinder)+(lengthCylinder*lengthCylinder))}"
+            ixy="0"
+            ixz="0"
+            iyy="${(((radiusCylinder*radiusCylinder)*3.1415)/12)*(3*(radiusCylinder*radiusCylinder)+(lengthCylinder*lengthCylinder))}"
+            iyz="0"
+            izz="${(((radiusCylinder*radiusCylinder)*3.1415)/2)*(radiusCylinder*radiusCylinder)}"/>
+        </inertial>
+      </link>
+
+      <joint name="${prefix}WheelJoint" type="continuous">
+        <parent link="base_link"/>
+        <child link="${prefix}Wheel"/>
+        <axis xyz="0 ${((widthBox/2)+(lengthCylinder/2))*y} 0"/>
+        <origin xyz="${((depthBox/2)-radiusCylinder)*x} ${((widthBox/2)+(lengthCylinder/2))*y} ${heightBox}"/>
+      </joint>
+
+  <transmission name="${prefix}Tran">
+    <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${prefix}WheelJoint">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+      </joint>
+    <actuator name="${prefix}Motor">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  </xacro:macro>
+
+
+
+  <!--Create wheels and joint to the main body using above algorithm-->
+  <xacro:wheel prefix="rightFront" x="1" y="1"/>
+  <xacro:wheel prefix="leftFront" x="1" y="-1"/>
+  <xacro:wheel prefix="rightBack" x="-1" y="1"/>
+  <xacro:wheel prefix="leftBack" x="-1" y="-1"/>
+
+  <joint name="kinectToBody" type="fixed">
+    <parent link="base_link"/>
+    <child link="kinect"/>
+    <origin xyz="${(depthBox/2)-(depthKinect/2)} 0 ${(heightBox/2)+heightBox+(heightKinect/2)}"/>
+  </joint>
+
+</robot>

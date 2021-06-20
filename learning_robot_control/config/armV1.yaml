@@ -1,0 +1,15 @@
+armV1:
+  # Publish all joint states
+  joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 50
+
+  # Velocity Controllers
+  c13Controller:
+    type: velocity_controllers/JointVelocityController
+    joint: c13Toc12Joint
+    pid: {p: 100.0, i: 0.01, d: 10.0}
+  c22Controller:
+    type: velocity_controllers/JointVelocityController
+    joint: c22Toc21Joint
+    pid: {p: 100.0, i: 0.01, d: 10.0}

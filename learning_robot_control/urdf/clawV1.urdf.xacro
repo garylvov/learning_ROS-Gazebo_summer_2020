@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="Clawbot">
+  <link name="claw">
+    <visual>
+      <geometry>
+        <mesh filename="package://learning_robot_control/meshes/gripperV2.dae"/>
+      </geometry>
+      <origin rpy="1.5707 0 0" xyz="0 0 0"/>
+    </visual>
+
+    <collision>
+      <geometry>
+        <mesh filename="package://learning_robot_control/meshes/gripperV2.dae" />
+      </geometry>
+      <origin rpy="1.5707 0 0" xyz="0 0 0"/>
+    </collision>
+
+    <inertial>
+      <mass value="10"/>
+      <inertia
+        ixx=".1"
+        ixy="0"
+        ixz="0"
+        iyy=".1"
+        iyz="0"
+        izz=".1"/>
+    </inertial>
+  </link>
+
+    <link name="world"/>
+
+    <joint name="clawToWorld" type="fixed">
+      <parent link="world"/>
+      <child link="claw"/>
+      <origin xyz="0 0 1"/>
+    </joint>
+
+</robot>

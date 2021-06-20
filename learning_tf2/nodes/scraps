@@ -1,0 +1,61 @@
+if(.3 > (math.sqrt(relative.transform.translation.x ** 2 + relative.transform.translation.y ** 2))):
+    rospy.wait_for_service('kill')
+    remove = rospy.ServiceProxy('kill', turtlesim.srv.Kill)
+    remove(objectOne)
+    remove(objectTwo)
+    turtleExists = False
+
+
+    remove(objectTwo)
+            turtleExists = False
+def checkCollision(objectOne, objectTwo):
+    infoDelay2 = tf2_ros.Buffer()
+    istener2 = tf2_ros.TransformListener(infoDelay2)
+    turtleExists = True
+
+    while not rospy.is_shutdown() and turtleExists:
+        try:
+            relative = infoDelay2.lookup_transform(objectOne, objectTwo, rospy.Time())
+        except(tf2_ros.LookupException, tf2_ros.ConnectivityException, tf2_ros.ExtrapolationException):
+            continue
+
+
+
+
+        if(.3 > (math.sqrt(relative.transform.translation.x ** 2 + relative.transform.translation.y ** 2))):
+            rospy.wait_for_service('kill')
+            remove = rospy.ServiceProxy('kill', turtlesim.srv.Kill)
+            remove(objectOne)
+            remove(objectTwo)
+            turtleExists = False
+            aster1 = infoDelay.lookup_transform(name, 'asteroid1', rospy.Time())
+            aster2 = infoDelay.lookup_transform(name, 'asteroid2', rospy.Time())
+            aster3 = infoDelay.lookup_transform(name, 'asteroid3', rospy.Time())
+            aster4 = infoDelay.lookup_transform(name, 'asteroid4', rospy.Time())
+            dist1 = math.sqrt(aster1.transform.translation.x ** 2 + aster1.transform.translation.y ** 2)
+            dist2 = math.sqrt(aster2.transform.translation.x ** 2 + aster2.transform.translation.y ** 2)
+            dist3 = math.sqrt(aster3.transform.translation.x ** 2 + aster3.transform.translation.y ** 2)
+            dist4 = math.sqrt(aster4.transform.translation.x ** 2 + aster4.transform.translation.y ** 2)
+
+            if(.4>dist1 or .4>dist2 or .4>dist3 or .4>dist4):
+                rospy.wait_for_service('kill')
+                remove = rospy.ServiceProxy('kill', turtlesim.srv.Kill)
+                remove(name)
+
+
+
+
+
+
+            ml = 'missile1', 'missile2', 'missile3'
+            al = 'asteroid1', 'asteroid2', 'asteroid3', 'asteroid4'
+            for missile in ml:
+                m = threading.Thread(target = checkCollision, kwargs = {'objectOne':missile, 'objectTwo':'turtle1'})
+                m.start()
+            for asteroid in al:
+                a = threading.Thread(target = checkCollision, kwargs = {'objectOne':asteroid, 'objectTwo':'turtle1'})
+                a.start()
+            for m2 in ml:
+                for a2 in al:
+                    am = threading.Thread(target = checkCollision, kwargs = {'objectOne':a2, 'objectTwo':m2})
+                    am.start()

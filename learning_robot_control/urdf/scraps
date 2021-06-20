@@ -1,0 +1,30 @@
+<xacro:macro name="arm" params="prefix orientation armRadius armDepth">
+  <link name="${prefix}connection">
+
+    <visual>
+      <geometry>
+        <cylinder length="${armDepth}" radius="${armRadius}"/>
+      </geometry>
+      <origin rpy="${orientation} 0 0" xyz="0 0 0"/>
+    </visual>
+
+    <collision>
+      <geometry>
+        <cylinder length="${armDepth}" radius="${armRadius}"/>
+      </geometry>
+      <origin rpy="${orientation} 0 0" xyz="0 0 0"/>
+    </collision>
+
+    <inertial>
+      <mass value="${(armRadius*armRadius)*3.1415}"/>
+      <inertia
+        ixx="${(((armRadius*armRadius)*3.1415)/12)*(3*(armRadius*armRadius)+(armDepth*armDepth))}"
+        ixy="0"
+        ixz="0"
+        iyy="${(((armRadius*armRadius)*3.1415)/12)*(3*(armRadius*armRadius)+(armDepth*armDepth))}"
+        iyz="0"
+        izz="${(((armRadius*armRadius)*3.1415)/2)*(armRadius*armRadius)}"/>
+    </inertial>
+
+  </link>
+</xacro:macro>

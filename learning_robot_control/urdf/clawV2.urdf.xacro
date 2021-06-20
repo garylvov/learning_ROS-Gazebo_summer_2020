@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="Clawbot">
+  <link name="claw">
+    <visual>
+      <geometry>
+        <mesh filename="package://learning_robot_control/meshes/gripperV2.dae" scale="0.0075 0.0075 0.0075"/>
+      </geometry>
+      <origin rpy="1.5707 0 0" xyz="0 0 0"/>
+    </visual>
+
+    <collision>
+      <geometry>
+        <mesh filename="package://learning_robot_control/meshes/gripperV2.dae" scale="0.0075 0.0075 0.0075"/>
+      </geometry>
+      <origin rpy="1.5707 0 0" xyz="0 0 0"/>
+    </collision>
+
+    <inertial>
+      <mass value="10"/>
+      <inertia
+        ixx=".1"
+        ixy="0"
+        ixz="0"
+        iyy=".1"
+        iyz="0"
+        izz=".1"/>
+    </inertial>
+  </link>
+  <xacro:macro name="cylinder" params="name orientation radius depth density">
+    <link name="${name}">
+      <visual>
+        <geometry>
+          <cylinder length="${depth}" radius="${radius}"/>
+        </geometry>
+        <origin rpy="${orientation} 0 0" xyz="0 0 0"/>
+      </visual>
+
+      <collision>
+        <geometry>
+          <cylinder length="${depth}" radius="${radius}"/>
+        </geometry>
+        <origin rpy="${orientation} 0 0" xyz="0 0 0"/>
+      </collision>
+
+      <inertial>
+        <mass value="${(radius*radius*density)*3.1415}"/>
+        <inertia
+          ixx="${(((radius*radius*density)*3.1415)/12)*(3*(radius*radius)+(depth*depth))}"
+          ixy="0"
+          ixz="0"
+          iyy="${(((radius*radius*density)*3.1415)/12)*(3*(radius*radius)+(depth*depth))}"
+          iyz="0"
+          izz="${(((radius*radius*density)*3.1415)/2)*(radius*radius)}"/>
+      </inertial>
+    </link>
+  </xacro:macro>
+
+  <xacro:property name="c12Radius" value=".00925" />
+  <xacro:property name="c12Depth" value=".025" />
+  <xacro:cylinder name="c12" orientation="0" radius="${c12Radius}" depth="${c12Depth}" density="10"/>
+    <link name="world"/>
+
+    <joint name="clawToWorld" type="fixed">
+      <parent link="world"/>
+      <child link="claw"/>
+      <origin xyz="0 0 1"/>
+    </joint>
+    <joint name="c12ToWorld" type="fixed">
+      <parent link="world"/>
+      <child link="c12"/>
+      <origin xyz="0 0 1"/>
+    </joint>
+</robot>
