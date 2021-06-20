@@ -1,22 +1,22 @@
-### www.garylvov.com
+# www.garylvov.com
 
-# learning_ROS-Gazebo_summer_2020
+### learning_ROS-Gazebo_summer_2020
 
 I made presentations documenting my learning in the summer of 2020 that roughly correspond to each folder:
 
-Starting_turtle_sim:
+### Starting_turtle_sim:
 
 https://docs.google.com/presentation/d/1CTT1WWWYmInlhgyuYCWUG0nzh5uIPHDWVBbPUJxsJ2o/edit?usp=sharing
 
-learning_tf2:
+### learning_tf2:
 
 https://docs.google.com/presentation/d/1_pw1q44OWtbi_HjdMg31UlBJcOZM5Aqa-oWOIPujRhc/edit?usp=sharing
 
-learning_gazebo-urdf:
+### learning_gazebo-urdf:
 
 https://docs.google.com/presentation/d/1_6PNJLIL05EsbbE-FmXXoZOCjGkRohL0-skttFU-HBY/edit?usp=sharing
 
-learning_robot_control:
+### learning_robot_control:
 
 https://docs.google.com/presentation/d/1hxbebaJZg0ljxCZupPeJI1XoX6uzpiWhaWU7RDpRc24/edit#slide=id.p
 
