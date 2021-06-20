@@ -23,4 +23,4 @@ https://docs.google.com/presentation/d/1150KO8CvxeMJvf3-PFMfUvr5tqYcpcrzlOvKGa3y
 Since I've compiled several old repos that I created that summer into this single repo,and deleted the old repos, 
 the links to my source code in the presentations don't work anymore.
 
-I've intentionally left the old non-functioning links to preserve the "last edit was on" timestamp for the presentations.
+I've intentionally left the old non-functioning links to preserve the "last edit was on" timestamp on the presentations.
