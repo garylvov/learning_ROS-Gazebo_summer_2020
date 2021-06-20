@@ -1,7 +1,5 @@
 # www.garylvov.com
 
-### learning_ROS-Gazebo_summer_2020
-
 I made presentations documenting my learning in the summer of 2020 that roughly correspond to each folder:
 
 ### Starting_turtle_sim:
