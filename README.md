@@ -4,21 +4,19 @@ I made presentations documenting my learning in the summer of 2020 that roughly 
 
 ### Starting_turtle_sim:
 
-https://docs.google.com/presentation/d/1CTT1WWWYmInlhgyuYCWUG0nzh5uIPHDWVBbPUJxsJ2o/edit?usp=sharing
+https://tinyurl.com/mht22weu
 
 ### learning_tf2:
 
-https://docs.google.com/presentation/d/1_pw1q44OWtbi_HjdMg31UlBJcOZM5Aqa-oWOIPujRhc/edit?usp=sharing
+https://tinyurl.com/famezpv4
 
 ### learning_gazebo-urdf:
 
-https://docs.google.com/presentation/d/1_6PNJLIL05EsbbE-FmXXoZOCjGkRohL0-skttFU-HBY/edit?usp=sharing
-
+https://tinyurl.com/27vmntpe
 ### learning_robot_control:
 
-https://docs.google.com/presentation/d/1hxbebaJZg0ljxCZupPeJI1XoX6uzpiWhaWU7RDpRc24/edit#slide=id.p
-
-https://docs.google.com/presentation/d/1150KO8CvxeMJvf3-PFMfUvr5tqYcpcrzlOvKGa3yJMI/edit?usp=sharing
+https://tinyurl.com/yppejekd
+https://tinyurl.com/eswme7ne
 
 Since I've compiled several old repos that I created that summer into this single repo,and deleted the old repos, 
 the links to my source code in the presentations don't work anymore.
